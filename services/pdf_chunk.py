@@ -79,4 +79,3 @@ for filename in os.listdir(pdf_dir):
                 "chunk_id": idx,
                 "text": chunk_text
             })
-    break
