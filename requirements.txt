@@ -1,7 +1,0 @@
-fitz
-pandas
-transformers
-torch
-scikit-learn
-pandasql
-sentencepiece

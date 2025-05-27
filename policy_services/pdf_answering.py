@@ -1,36 +1,26 @@
-from transformers import pipeline
-from pdf_faiss import search_faiss
-
-model_name = "google/flan-t5-base"
-
-generator = pipeline('text2text-generation', model=model_name)
-
+# policy_services/pdf_answering.py
+from policy_services.pdf_faiss import search_faiss
+from model_services.api_models import call_model
+import json
 
 def generate_answer(query, docs):
-    context = " ".join([d['text'] for d in docs])
-    # print(context)
-    # print("+" * 60)
+
     prompt = (
-    "Answer the query based on the context. If the context doesn't contain the answer, respond with 'Info not found.'\n\n"
-    f"Context: {context}\n\n"
-    f"Query: {query}\n\n"
-    "Answer:"
-)
+        "Using policy documents give the most accurate answer only. If the context doesn't contain the answer, respond with 'Info not found.'\n\n"
+        f"Policy Documents: {docs}\n\n"
+        f"Query: {query}\n\n"
+        "Answer:"
+    )
 
-    response = generator(prompt,  do_sample=False)
-    return response[0]['generated_text']
+    # Call Claude or other model via your API
+    response = call_model(prompt, i=0)  # 0 = "claude-3-haiku"
+    return response['content'][0]['text']
 
-if __name__ == "__main__":
-    while True:
-        query = input("Enter your query: ")
-        if not query.strip():
-            print("Exiting...")
-            break
+def answering_main(query):
         scores, results = search_faiss(query, top_k=3)
         if not results:
-            print("No relevant documents found.")
-            continue
-        answer = generate_answer(query, results)
-        print(f"Answer: {answer}")
-        print(f"Sources: {set([r['filename'] for r in results])}")
-        print("-" * 60)
+            return "No relevant documents found."
+        answer = generate_answer(query, [r['text'] for r in results])
+        sources = set([r['filename'] for r in results])
+
+        return answer, sources
