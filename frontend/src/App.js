@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 // import './App.css';
-import ChatGPTStyle from './Chat';
+import ChatGPTStyle from './components/Chat';
 
 
 function App() {

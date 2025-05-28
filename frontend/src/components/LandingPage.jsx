@@ -5,14 +5,16 @@ export default function LandingPage( {sendMessage, newMessage, setNewMessage, us
     <h1 style={{ textAlign: 'center', fontSize: '300%' }}>Smart Assisstant</h1>
   <div
     style={{
-      display: 'flex',
-      maxWidth: 1200,
-      margin: '40px auto',
-      gap: 32,
-      fontFamily,
-      padding: '0 16px',
-      boxSizing: 'border-box',
-    }}
+        
+        flex: 1,
+        borderRadius: 16,
+        boxShadow: '0 12px 32px rgba(0,0,0,0.12)',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '80vh',
+        overflow: 'hidden',
+        transition: 'box-shadow 0.3s ease',
+      }}
     > 
       <form
         onSubmit={sendMessage}

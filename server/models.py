@@ -1,4 +1,3 @@
-from fastapi import FastAPI
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, create_engine, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
@@ -54,16 +53,3 @@ class UserToken(Base):
 
     user = relationship("User")
 
-
-# FastAPI App
-app = FastAPI()
-
-
-@app.on_event("startup")
-def on_startup():
-    Base.metadata.create_all(bind=engine)
-
-
-@app.get("/")
-def read_root():
-    return {"message": "Database initialized successfully!"}

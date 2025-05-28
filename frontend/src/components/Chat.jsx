@@ -15,6 +15,7 @@ export default function ChatGPTStyle({
   const [data, setData] = useState(null);
   const chatWindowRef = useRef(null);
   const [collapsed, setCollapsed] = useState(true);
+  const [loading, setLoading] = useState(false);
   const navbarWidth = 360;
   const collapsedWidth = 48;
 
@@ -26,6 +27,7 @@ export default function ChatGPTStyle({
   }, [messages]);
 
   const sendMessage = async (e) => {
+    setLoading(true);
   e.preventDefault();
   const text = newMessage.trim();
   if (!text) return;
@@ -59,6 +61,7 @@ export default function ChatGPTStyle({
       { from: 'ai', text: `Error: ${error.message}` },
     ]);
   }
+  setLoading(false);
 };
 
   if (!data) {
@@ -79,8 +82,7 @@ return (<>
   <h1 style={{ textAlign: 'center', fontSize: '300%' }}>Smart Assisstant</h1>
   <div
     style={{
-      display: 'flex',
-      maxWidth: 1200,
+      maxWidth: '85%',
       margin: '40px auto',
       gap: 32,
       fontFamily,
@@ -88,7 +90,7 @@ return (<>
       boxSizing: 'border-box',
     }}
   >
-    {/* Chat section (Left) */}
+    {/* Chat section*/}
     <div
       style={{
         backgroundColor,

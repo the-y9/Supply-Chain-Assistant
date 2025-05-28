@@ -1,6 +1,12 @@
 from fastapi import FastAPI
 from server.query_route import router as query_router
+from server.auth import router as auth_router
 from fastapi.middleware.cors import CORSMiddleware
+from server.models import Base, engine, SessionLocal, DATABASE_URL
+import os
+from sqlalchemy import inspect
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -16,5 +22,7 @@ app.add_middleware(
 def read_root():
     return {"message": "Welcome to the Policy Document Query Service!"}
 
-# Include the query router
+# Include the routers
 app.include_router(query_router, tags=["Query Handler"])
+app.include_router(auth_router, tags=["Authentication"])
+
