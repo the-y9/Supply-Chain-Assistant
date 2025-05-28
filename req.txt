@@ -2,3 +2,4 @@ dotenv
 requests
 faiss-cpu==1.11.0
 PyMuPDF
+fastapi[standard]

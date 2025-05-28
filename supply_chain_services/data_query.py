@@ -47,10 +47,10 @@ def refine_answer(prompt, response):
 
 def data_query_main(prompt, policy=None):    
     sql_query = prompt_to_sql(prompt, policy)
-    print(f"Used SQL Query: {sql_query}")
+    # print(f"Used SQL Query: {sql_query}")
 
     sql_response = sqlite_query(sql_query)
-    print(f"{len(sql_response)} rows returned from SQL query.")
+    # print(f"{len(sql_response)} rows returned from SQL query.")
     # print(f"SQL Response: {sql_response}")
     max_preview_rows = 50
     flag = False
@@ -61,6 +61,6 @@ def data_query_main(prompt, policy=None):
     answer = refine_answer(prompt, sql_response)
     if flag:
         answer += "\n\nNote: The SQL response was too large for model call, hence it is truncated to the first 50 rows for preview purposes."
-    print(f"SQL Refined Answer: {answer}")
+    # print(f"SQL Refined Answer: {answer}")
 
     return sql_query, sql_response, refine_answer(prompt, sql_response)

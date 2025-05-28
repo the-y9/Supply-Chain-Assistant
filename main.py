@@ -1,17 +1,20 @@
-from policy_services.pdf_faiss import faiss_main, search_faiss
-# from policy_services.pdf_answering import answering_main
-# from supply_chain_services.data_query import data_query_main
-from query import query_main
+from fastapi import FastAPI
+from server.query_route import router as query_router
+from fastapi.middleware.cors import CORSMiddleware
 
+app = FastAPI()
 
-if __name__ == "__main__":
-    prompt = """
-    Based on our Risk Management framework, which supply chain disruptions occurred in the past year that exceeded our defined risk tolerance thresholds, and what was their financial impact?
-"""
-    # prompt = """
-    # supply chain disruptions
-    # """
-    # s, results = search_faiss(prompt)
-    # print([r['text'] for r in results])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-    print(query_main(prompt))
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Policy Document Query Service!"}
+
+# Include the query router
+app.include_router(query_router, tags=["Query Handler"])
