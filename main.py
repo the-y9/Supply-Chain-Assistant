@@ -26,3 +26,7 @@ def read_root():
 app.include_router(query_router, tags=["Query Handler"])
 app.include_router(auth_router, tags=["Authentication"])
 
+import os
+
+port = int(os.environ.get("PORT", 10000))
+uvicorn.run("main:app", host="0.0.0.0", port=port)
