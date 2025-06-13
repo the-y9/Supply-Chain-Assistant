@@ -4,3 +4,4 @@ faiss-cpu==1.11.0
 PyMuPDF
 fastapi[standard]
 sqlalchemy
+python-jose
